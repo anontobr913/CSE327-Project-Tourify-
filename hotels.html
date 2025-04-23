@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hotels</title>
+  <link rel="stylesheet" href="Styles/hotel.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Find Your Perfect Hotel</h1>
+
+    <div class="hotel-search-bar">
+      <input type="text" id="hotelLocation" placeholder="Location (e.g., Mumbai)" />
+      <input type="date" id="checkInDate" />
+      <input type="date" id="checkOutDate" />
+      <input type="number" id="guestCount" min="1" value="1" />
+      <button id="searchHotelBtn">Search Hotels</button>
+    </div>
+
+    <div id="hotelResults" class="results-grid">
+      <!-- Hotel cards will be injected here -->
+    </div>
+  </div>
+
+  <script type="module">
+    document.getElementById('searchHotelBtn').addEventListener('click', async () => {
+      const location = document.getElementById('hotelLocation').value;
+      const checkIn = document.getElementById('checkInDate').value;
+      const checkOut = document.getElementById('checkOutDate').value;
+      const guests = document.getElementById('guestCount').value;
+
+      if (!location || !checkIn || !checkOut) {
+        alert('Please fill in all fields!');
+        return;
+      }
+
+      try {
+        const response = await fetch(`http://localhost:3001/search-hotels?location=${location}&checkInDate=${checkIn}&checkOutDate=${checkOut}&guests=${guests}`);
+        const hotels = await response.json();
+        const container = document.getElementById('hotelResults');
+        container.innerHTML = '';
+
+        hotels.forEach(hotel => {
+          const card = document.createElement('div');
+          card.classList.add('hotel-card');
+          card.innerHTML = `
+            <img src="https://source.unsplash.com/600x300/?hotel,room" alt="Hotel Image" />
+            <div class="hotel-card-content">
+              <h3>${hotel.name}</h3>
+              <p><strong>Location:</strong> ${hotel.location}</p>
+              <p><strong>Check-In:</strong> ${new Date(hotel.check_in_date).toLocaleDateString()}</p>
+              <p><strong>Check-Out:</strong> ${new Date(hotel.check_out_date).toLocaleDateString()}</p>
+              <p><strong>Guests:</strong> ${guests}</p>
+              <p class="price">Price/Night: $${hotel.price}</p>
+            </div>
+            <div class="hotel-card-footer">
+              <button>Book Now</button>
+            </div>
+          `;
+          container.appendChild(card);
+        });
+
+      } catch (err) {
+        alert('Error fetching hotels.');
+        console.error(err);
+      }
+    });
+  </script>
+</body>
+</html>

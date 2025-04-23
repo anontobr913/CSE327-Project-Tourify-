@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tourify – Travel Booking Made Easy</title>
+  <link rel="stylesheet" href="styles/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container">
+      <div class="logo">🌍 Tourify</div>
+  
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+        <i class="fas fa-bars"></i>
+      </button>
+  
+      <!-- 🔽 This is the navigation links menu -->
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="create-package.html">Packages</a></li>
+        <li><a href="flights.html">Flights</a></li>
+        <li><a href="hotels.html">Hotels</a></li>
+        <li><a href="tours.html">Tours</a></li>
+        <li><a href="cart.html">Cart</a></li>
+      </ul>
+    </div>
+  </nav>
+  
+
+  <!-- Hero Section -->
+  <header class="hero">
+    <div class="hero-container">
+      <h1>Find Your Perfect Travel Package</h1>
+      <p>Search and book full travel experiences in one place.</p>
+
+      <!-- Tabbed Search UI -->
+      <section class="search-tabs-ui">
+        <div class="tab-header">
+          <button class="tab active" data-tab="flight">✈️ Flight</button>
+          <button class="tab" data-tab="hotel">🏨 Hotel</button>
+          <button class="tab" data-tab="tour">🏝️ Tour</button>
+        </div>
+
+        <!-- FLIGHT form -->
+        <div class="tab-body active" id="flight">
+          <h3>Flight</h3>
+          <select id="sortFlights">
+            <option value="">Sort Flights</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="name">Flight Name</option>
+          </select>
+
+          <div class="form-row">
+            <input type="text" id="flightFrom" placeholder="From City: Dhaka" />
+            <input type="text" id="flightTo" placeholder="To City: Dubai" />
+          </div>
+          <div class="form-row">
+            <input type="date" id="flightDeparture" placeholder="Departure Date" />
+            <input type="date" id="flightReturn" placeholder="Return Date" />
+            <input type="number" id="flightPerson" placeholder="Number of Travelers" />
+          </div>
+          <select id="flightClass">
+            <option value="economy">Economy</option>
+            <option value="business">Business</option>
+            <option value="first">First</option>
+          </select>
+
+          <button class="main-search-btn" id="flightSearchBtn">Search</button>
+          <div id="flightResults"></div>
+
+          <!-- Flight Result Template -->
+          <template id="flightCardTemplate">
+            <div class="result-card">
+              <div class="card-top">
+                <h4 class="flight-name">Flight Name</h4>
+              </div>
+              <p class="route"><i class="fa-solid fa-plane-departure"></i> From: Dhaka → Mumbai</p>
+              <p class="departure"><i class="fa-solid fa-calendar-days"></i> Departure: 2025-06-04</p>
+              <p class="return"><i class="fa-solid fa-calendar-days"></i> Return: 2025-06-10</p>
+              <p class="flight-class"><i class="fa-solid fa-chair"></i> Class: Economy</p>
+              <p class="price">Price: $350.00</p>
+              <label>Pay With:
+                <select class="payment-method">
+                  <option value="stripe">Stripe</option>
+                  <option value="bkash">bKash</option>
+                </select>
+              </label>
+              <div class="button-bar">
+                <button class="bookBtn">Book Now</button>
+                <button>Save</button>
+              </div>
+            </div>
+          </template>
+        </div>
+
+        <!-- HOTEL form -->
+        <div class="tab-body" id="hotel">
+          <h3>Hotel</h3>
+          <select id="sortHotels">
+            <option value="">Sort Hotels</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="name">Hotel Name</option>
+          </select>
+
+          <div class="form-row">
+            <input type="text" id="hotelLocation" placeholder="Hotel Location" />
+            <input type="number" id="hotelMembers" placeholder="Number of Guests" />
+          </div>
+          <div class="form-row">
+            <input type="date" id="hotelCheckin" placeholder="Check-in Date" />
+            <input type="date" id="hotelCheckout" placeholder="Check-out Date" />
+          </div>
+
+          <button class="main-search-btn" id="hotelSearchBtn">Search</button>
+          <div id="hotelResults"></div>
+
+          <!-- Hotel Result Template -->
+          <template id="hotelCardTemplate">
+            <div class="result-card">
+              <div class="card-top">
+                <h4 class="hotel-name">Hotel Name</h4>
+              </div>
+              <p class="location">Location: Mumbai</p>
+              <p class="date-range">Check-in: 2025-06-04 → Check-out: 2025-06-08</p>
+              <p class="guests">Guests: 2</p>
+              <p class="price">Price per night: $120</p>
+              <label>Pay With:
+                <select class="payment-method">
+                  <option value="stripe">Stripe</option>
+                  <option value="bkash">bKash</option>
+                </select>
+              </label>
+              <div class="button-bar">
+                <button class="bookBtn">Book Now</button>
+                <button>Save</button>
+              </div>
+              <div class="payment-confirmation"></div>
+            </div>
+          </template>
+          >
+        </div>
+
+        <!-- TOUR form -->
+        <div class="tab-body" id="tour">
+          <h3>Tour</h3>
+          <select id="sortTours">
+            <option value="">Sort Tours</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="name">Tour Name</option>
+          </select>
+
+          <div class="form-row">
+            <input type="text" id="tourLocation" placeholder="Tour Location" />
+            <input type="date" id="tourDate" placeholder="Tour Date" />
+            <input type="number" id="tourGuests" placeholder="Number of Persons" value="1" />
+          </div>
+
+          <button class="main-search-btn" id="tourSearchBtn">Search</button>
+          <div id="tourResults"></div>
+
+          <!-- Tour Result Template -->
+          <template id="tourCardTemplate">
+            <div class="result-card">
+              <div class="card-top">
+                <h4 class="tour-name">Tour Name</h4>
+              </div>
+              <p class="location">Location: Pokhara</p>
+              <p class="tour-date">Tour Date: 2025-06-07</p>
+              <p class="persons">For: 3 Persons</p>
+              <p class="price">Price per person: $75</p>
+              <label>Pay With:
+                <select class="payment-method">
+                  <option value="stripe">Stripe</option>
+                  <option value="bkash">bKash</option>
+                </select>
+              </label>
+              <div class="button-bar">
+                <button class="bookBtn">Book Now</button>
+                <button>Save</button>
+              </div>
+              <div class="payment-confirmation"></div>
+            </div>
+          </template>
+          
+        </div>
+
+      </section>
+    </div>
+  </header>
+
+  <!-- Popular Destinations Section -->
+  <section class="popular">
+    <h2>Popular Destinations</h2>
+    <div class="popular-grid">
+      <div class="destination-card">
+        <img src="assets/images/bali.webp" alt="Bali" />
+        <h3>Bali, Indonesia</h3>
+        <p>5 Days | Starts at $699</p>
+      </div>
+      <div class="destination-card">
+        <img src="assets/images/dubai.jpg" alt="Dubai" />
+        <h3>Dubai, UAE</h3>
+        <p>4 Nights | Starts at $799</p>
+      </div>
+      <div class="destination-card">
+        <img src="assets/images/istanbul.jpg" alt="Istanbul" />
+        <h3>Istanbul, Turkey</h3>
+        <p>6 Nights | Starts at $850</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-section about">
+        <h3>About Tourify</h3>
+        <p>Tourify is your one-stop platform for booking travel packages, flights, hotels, and guided tours — all from the comfort of your screen.</p>
+      </div>
+      <div class="footer-section links">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="index.html"> Home</a></li>
+          <li><a href="create-package.html"> Packages</a></li>
+          <li><a href="flights.html"> Flights</a></li>
+          <li><a href="hotels.html"> Hotels</a></li>
+          <li><a href="tours.html"> Tours</a></li>
+          <li><a href="contact.html"> Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-section contact">
+        <h3>Contact</h3>
+        <p> 56/B Satish Sarkar Road Gendaria, Dhaka</p>
+        <p> +8801974760915</p>
+        <p>✉️ <a href="mailto:info@tourify.com">info@tourify.com</a></p>
+      </div>
+      <div class="footer-section social">
+        <h3>Follow Us</h3>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook-f"></i> Facebook</a>
+          <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+          <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+          <a href="#"><i class="fab fa-youtube"></i> YouTube</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p></p>
+    </div>
+  </footer>
+
+  <script type="module" src="./home.js"></script>
+
+
+</body>
+</html>

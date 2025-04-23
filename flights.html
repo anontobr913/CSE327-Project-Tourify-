@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flights</title>
+  <link rel="stylesheet" href="Styles/flight.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Find Your Perfect Flight</h1>
+
+    <div class="flight-search-bar">
+      <input type="text" id="flightFrom" placeholder="From">
+      <input type="text" id="flightTo" placeholder="To">
+      <input type="date" id="flightDeparture">
+      <input type="date" id="flightReturn">
+      <select id="flightClass">
+        <option value="economy">Economy</option>
+        <option value="business">Business</option>
+        <option value="first">First Class</option>
+      </select>
+      <input type="number" id="travelerCount" value="1" min="1">
+      <button id="searchFlightBtn">Search Flights</button>
+    </div>
+
+    <div id="flightResults" class="results-grid">
+      <!-- Flight cards will be injected here -->
+    </div>
+  </div>
+
+  <script type="module">
+    document.getElementById('searchFlightBtn').addEventListener('click', async () => {
+      const from = document.getElementById('flightFrom').value;
+      const to = document.getElementById('flightTo').value;
+      const departureDate = document.getElementById('flightDeparture').value;
+      const returnDate = document.getElementById('flightReturn').value;
+      const flightClass = document.getElementById('flightClass').value;
+      const travelerCount = document.getElementById('travelerCount').value;
+
+      if (!from || !to || !departureDate || !returnDate) {
+        alert('Please fill in all fields!');
+        return;
+      }
+
+      try {
+        const response = await fetch(`http://localhost:3001/search-flights?from=${from}&to=${to}&departureDate=${departureDate}&returnDate=${returnDate}&flightClass=${flightClass}&travelerCount=${travelerCount}`);
+        const flights = await response.json();
+        const container = document.getElementById('flightResults');
+        container.innerHTML = '';
+
+        flights.forEach(flight => {
+          const card = document.createElement('div');
+          card.classList.add('flight-card');
+          card.innerHTML = `
+            <img src="https://source.unsplash.com/600x300/?airplane" alt="Flight Image">
+            <div class="flight-card-content">
+              <h3><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Turkish_Airlines_logo_2019.svg/120px-Turkish_Airlines_logo_2019.svg.png" class="flight-logo">${flight.flight_name}</h3>
+              <p><strong>Route:</strong> ${flight.from_city} → ${flight.to_city}</p>
+              <p><strong>Departure:</strong> ${new Date(flight.departure_date).toLocaleDateString()}</p>
+              <p><strong>Return:</strong> ${new Date(flight.return_date).toLocaleDateString()}</p>
+              <span class="badge">${flightClass}</span>
+              <p class="price">$${flight.price}</p>
+            </div>
+            <div class="flight-card-footer">
+              <span>${travelerCount} Traveler(s)</span>
+              <button>Book Now</button>
+            </div>
+          `;
+          container.appendChild(card);
+        });
+
+      } catch (err) {
+        alert('Error fetching flights.');
+        console.error(err);
+      }
+    });
+  </script>
+</body>
+</html>

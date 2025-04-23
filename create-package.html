@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Travel Package</title>
+  <link rel="stylesheet" href="Styles/style.css">
+  <link rel="stylesheet" href="Styles/create-pacakge.css">
+  
+</head>
+<body>
+  <div class="container">
+    <h1>Create Your Custom Travel Package</h1>
+
+    <!-- Flight Search Section -->
+    <div>
+      <label for="flightFrom">From:</label>
+      <input type="text" id="flightFrom" name="flightFrom" placeholder="e.g. Dhaka">
+    </div>
+
+    <div>
+      <label for="flightTo">To:</label>
+      <input type="text" id="flightTo" name="flightTo" placeholder="e.g. Mumbai">
+    </div>
+
+    <div>
+      <label for="flightDeparture">Departure Date:</label>
+      <input type="date" id="flightDeparture" name="flightDeparture">
+    </div>
+
+    <div>
+      <label for="flightReturn">Return Date:</label>
+      <input type="date" id="flightReturn" name="flightReturn">
+    </div>
+  
+
+    <div>
+      <label for="flightClass">Class:</label>
+      <select id="flightClass" name="flightClass">
+        <option value="economy">Economy</option>
+        <option value="business">Business</option>
+        <option value="first">First Class</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="travelerCount">Traveler Count:</label>
+      <input type="number" id="travelerCount" name="travelerCount" value="1">
+    </div>
+
+    <div>
+      <button id="searchFlightBtn">Search Flight</button>
+    </div>
+
+    <div id="flightResults"></div>
+
+    <!-- Hotel Search Section -->
+    <div>
+      <label for="hotelLocation">Hotel Location:</label>
+      <input type="text" id="hotelLocation" name="hotelLocation" placeholder="e.g. Mumbai">
+    </div>
+
+    <div>
+      <label for="checkInDate">Check-In Date:</label>
+      <input type="date" id="checkInDate" name="checkInDate">
+    </div>
+
+    <div>
+      <label for="checkOutDate">Check-Out Date:</label>
+      <input type="date" id="checkOutDate" name="checkOutDate">
+    </div>
+
+    <div>
+      <label for="hotelGuests">Number of Guests:</label>
+      <input type="number" id="hotelGuests" name="hotelGuests" value="1">
+    </div>
+
+    <div>
+      <button id="searchHotelBtn">Search Hotel</button>
+    </div>
+
+    <div id="hotelResults"></div>
+
+    <!-- Tour Search Section -->
+    <input type="text" id="tourLocation" placeholder="Enter Tour Location">
+    <input type="date" id="tourDate">
+    <input type="number" id="tourGuests" placeholder="Number of Persons" min="1" value="1">
+    <button id="searchTourBtn">Search Tour</button>
+
+    <div id="tourResults"></div>
+
+    <!-- Create Package Button (disabled by default) -->
+    <button id="createPackageBtn" disabled>Create Package</button>
+  </div>
+
+  <!-- Modal Popup -->
+  <div id="packageModal" class="modal-overlay hidden">
+    <div class="modal-content">
+      <span id="closeModal" class="close-btn">&times;</span>
+      <h2>Custom Trip Package</h2>
+      <p id="packageDetails"></p>
+  
+      <!-- ✉️ Email Input -->
+      <label for="customerEmail"><strong>Email:</strong></label>
+      <input type="email" id="customerEmail" placeholder="Enter your email" required />
+  
+      <!-- Booking Buttons -->
+      <div style="margin-top: 15px;">
+        <button id="savePackageBtn" class="save-btn">💾 Save for Later</button>
+        <button id="bookNowBtn" class="book-btn">🟢 Book Now</button>
+      </div>
+    </div>
+  </div>
+  
+
+  <script type="module" src="create-package.js"></script>
+
+</body>
+</html>
